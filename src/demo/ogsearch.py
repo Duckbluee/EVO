@@ -37,7 +37,6 @@ CONFIG = {
     'max_retries': 3,           # 最大重试次数
     'save_interval': 10,        # 每处理N篇论文保存一次进度
     'match_threshold': 0.4,     # 标题匹配阈值（Jaccard相似度）
-    'min_match_threshold': 0.25,# 最低标题匹配阈值
     'timeout': 30,              # 请求超时时间（秒）
 }
 
@@ -56,7 +55,6 @@ class Paper:
     year: str                   # 发表年份
     abstract: Optional[str] = None
     semantic_scholar_id: Optional[str] = None
-    doi: Optional[str] = None
     references: List[str] = field(default_factory=list)  # 该论文引用的其他论文title
     found: bool = False
     search_attempted: bool = False  # 是否已尝试搜索（用于断点续传）
@@ -125,50 +123,9 @@ def calculate_title_similarity(title1: str, title2: str) -> float:
     
     return min(1.0, jaccard + subset_bonus)
 
-def generate_search_variants(title: str) -> List[str]:
-    """生成多种搜索查询，兼容不同的标题写法"""
-    cleaned = clean_title(title)
-    variants: List[str] = []
-    if cleaned:
-        variants.append(cleaned)
-        if ':' in cleaned:
-            variants.append(cleaned.split(':')[0])
-        if '(' in cleaned and ')' in cleaned:
-            variants.append(re.sub(r'\(.*?\)', '', cleaned).strip())
-        words = cleaned.split()
-        if len(words) > 6:
-            variants.append(' '.join(words[:6]))
-    base_no_punct = re.sub(r'["\'"“”‘’,.:;!?]', '', cleaned)
-    if base_no_punct and base_no_punct not in variants:
-        variants.append(base_no_punct)
-    # 去重但保持顺序
-    seen = set()
-    ordered = []
-    for v in variants:
-        key = v.lower()
-        if v and key not in seen:
-            ordered.append(v)
-            seen.add(key)
-    return ordered or [title]
-
-def _select_best_candidate(candidates: List[dict], query: str, year_hint: Optional[str]) -> Tuple[Optional[dict], float]:
-    best_match = None
-    best_score = 0.0
-    year_hint_clean = year_hint.strip() if year_hint and year_hint.strip().isdigit() else None
-    for paper in candidates:
-        score = calculate_title_similarity(query, paper.get('title', ''))
-        paper_year = str(paper.get('year') or '').strip()
-        if year_hint_clean and paper_year == year_hint_clean:
-            score += 0.05
-        if score > best_score:
-            best_score = score
-            best_match = paper
-    return best_match, best_score
-
 # ============== Semantic Scholar API ==============
 
 BASE_URL = "https://api.semanticscholar.org/graph/v1"
-CROSSREF_URL = "https://api.crossref.org/works"
 
 def make_api_request(url: str, max_retries: Optional[int] = None) -> Optional[dict]:
     """
@@ -206,40 +163,43 @@ def make_api_request(url: str, max_retries: Optional[int] = None) -> Optional[di
     
     return None
 
-def search_paper_by_title(title: str, year: Optional[str] = None) -> Optional[dict]:
-    """使用Semantic Scholar API按标题搜索论文，带多重变体"""
-    variants = generate_search_variants(title)
-    fallback_result = None
-    fallback_score = 0.0
-    year_hint = year if year and year.isdigit() else None
-    for idx, query in enumerate(variants):
-        encoded_query = urllib.parse.quote(query)
-        url = (
-            f"{BASE_URL}/paper/search?query={encoded_query}&limit=8"
-            "&fields=title,abstract,year,paperId,externalIds"
-        )
-        data = make_api_request(url)
-        if not data or not data.get('data'):
-            continue
-        best_match, best_score = _select_best_candidate(data['data'], query, year_hint)
-        if not best_match:
-            continue
-        dynamic_threshold = max(CONFIG['min_match_threshold'], CONFIG['match_threshold'] - 0.1 * idx)
-        # 年份完全匹配时不需要达到动态阈值
-        best_year = str(best_match.get('year') or '')
-        year_matches = year_hint and year_hint == best_year
-        if best_score >= dynamic_threshold or year_matches:
-            best_match['_match_score'] = best_score
-            if best_score < dynamic_threshold and not year_matches:
-                best_match['_low_confidence'] = True
-            return best_match
-        if best_score > fallback_score:
-            fallback_result = best_match
-            fallback_score = best_score
-    if fallback_result:
-        fallback_result['_match_score'] = fallback_score
-        fallback_result['_low_confidence'] = True
-        return fallback_result
+def search_paper_by_title(title: str) -> Optional[dict]:
+    """
+    使用Semantic Scholar API按标题搜索论文
+    """
+    search_query = clean_title(title)
+    encoded_query = urllib.parse.quote(search_query)
+    
+    # 搜索时获取更多候选结果
+    url = f"{BASE_URL}/paper/search?query={encoded_query}&limit=5&fields=title,abstract,year,paperId"
+    
+    data = make_api_request(url)
+    
+    if not data or not data.get('data'):
+        return None
+    
+    # 找最佳匹配
+    best_match = None
+    best_score = 0
+    
+    for paper in data['data']:
+        score = calculate_title_similarity(search_query, paper.get('title', ''))
+        if score > best_score:
+            best_score = score
+            best_match = paper
+    
+    # 只有分数足够高才返回
+    if best_match and best_score >= CONFIG['match_threshold']:
+        best_match['_match_score'] = best_score
+        return best_match
+    
+    # 如果没有好的匹配，返回第一个结果但标记为低置信度
+    if data['data']:
+        result = data['data'][0]
+        result['_match_score'] = best_score
+        result['_low_confidence'] = True
+        return result
+    
     return None
 
 def get_paper_references(paper_id: str) -> List[dict]:
@@ -254,54 +214,6 @@ def get_paper_references(paper_id: str) -> List[dict]:
         return [ref for ref in data['references'] if ref and ref.get('title')]
     
     return []
-
-def fetch_semantic_scholar_paper(identifier: str) -> Optional[dict]:
-    """直接通过paperId或DOI获取论文详情"""
-    encoded = urllib.parse.quote(identifier)
-    fields = "title,abstract,year,paperId,externalIds,references.title,references.paperId"
-    url = f"{BASE_URL}/paper/{encoded}?fields={fields}"
-    return make_api_request(url)
-
-def _extract_year_from_crossref(item: dict) -> Optional[str]:
-    issued = item.get('issued', {}).get('date-parts')
-    if issued and isinstance(issued, list) and issued[0]:
-        year_val = issued[0][0]
-        return str(year_val)
-    return None
-
-def search_crossref_by_title(title: str, year: Optional[str] = None) -> Optional[dict]:
-    """在Crossref中查找，返回包含DOI的信息"""
-    year_hint = year if year and year.isdigit() else None
-    variants = generate_search_variants(title)[:2]
-    best_candidate = None
-    best_score = 0.0
-    for query in variants:
-        encoded = urllib.parse.quote(query)
-        filter_part = ""
-        if year_hint:
-            filter_part = f"&filter=from-pub-date:{year_hint},until-pub-date:{year_hint}"
-        url = f"{CROSSREF_URL}?rows=5&select=DOI,title,issued&query.title={encoded}{filter_part}"
-        data = make_api_request(url)
-        if not data or not data.get('message'):
-            continue
-        for item in data['message'].get('items', []):
-            titles = item.get('title') or []
-            target_title = titles[0] if titles else ''
-            score = calculate_title_similarity(query, target_title)
-            item_year = _extract_year_from_crossref(item)
-            if year_hint and item_year == year_hint:
-                score += 0.05
-            if score > best_score and item.get('DOI'):
-                best_score = score
-                best_candidate = {
-                    'doi': item['DOI'],
-                    'title': target_title,
-                    'year': item_year,
-                    '_match_score': score
-                }
-        if best_score >= CONFIG['min_match_threshold']:
-            break
-    return best_candidate
 
 # ============== 核心逻辑 ==============
 
@@ -357,47 +269,25 @@ def fetch_paper_info(paper: Paper, all_titles: Set[str]) -> bool:
     获取单篇论文的信息
     """
     # 搜索论文
-    result = search_paper_by_title(paper.title_cleaned, paper.year)
+    result = search_paper_by_title(paper.title_cleaned)
     paper.search_attempted = True
-    fallback_used = False
-    if not result:
-        crossref_candidate = search_crossref_by_title(paper.title_cleaned, paper.year)
-        if crossref_candidate and crossref_candidate.get('doi'):
-            detailed = fetch_semantic_scholar_paper(crossref_candidate['doi'])
-            if detailed:
-                detailed['_match_score'] = crossref_candidate.get('_match_score', 0.0)
-                detailed['_low_confidence'] = detailed.get('_low_confidence', False)
-                detailed['_matched_doi'] = crossref_candidate['doi']
-                result = detailed
-                fallback_used = True
     
     if result:
         paper.found = True
         paper.semantic_scholar_id = result.get('paperId')
         paper.abstract = result.get('abstract') or ''
-        external_ids = result.get('externalIds') or {}
-        if isinstance(external_ids, dict):
-            paper.doi = external_ids.get('DOI') or result.get('_matched_doi')
-        else:
-            paper.doi = result.get('_matched_doi')
         
         # 获取references
-        refs_data = result.get('references') if isinstance(result.get('references'), list) else []
-        if refs_data:
-            refs = refs_data
-        elif paper.semantic_scholar_id:
+        if paper.semantic_scholar_id:
             refs = get_paper_references(paper.semantic_scholar_id)
-        else:
-            refs = []
-        for ref in refs:
-            ref_title = ref.get('title', '')
-            ref_normalized = normalize_title_for_matching(ref_title)
-            if ref_normalized in all_titles:
-                paper.references.append(ref_title)
+            for ref in refs:
+                ref_title = ref.get('title', '')
+                ref_normalized = normalize_title_for_matching(ref_title)
+                if ref_normalized in all_titles:
+                    paper.references.append(ref_title)
         
         confidence = "✓" if not result.get('_low_confidence') else "~"
-        fallback_note = " via Crossref" if fallback_used else ""
-        print(f"    {confidence} Found{fallback_note} (score={result.get('_match_score', 0):.2f}), "
+        print(f"    {confidence} Found (score={result.get('_match_score', 0):.2f}), "
               f"abstract={len(paper.abstract)}chars, refs_in_set={len(paper.references)}")
         return True
     else:
@@ -473,7 +363,6 @@ def save_final_output(root_paper: Paper, reference_papers: List[Paper],
             'title': p.title,
             'title_cleaned': p.title_cleaned,
             'year': p.year,
-            'doi': p.doi or '',
             'abstract': p.abstract or '',
             'found': p.found,
             'semantic_scholar_id': p.semantic_scholar_id,
