@@ -1,0 +1,925 @@
+{
+  "root": {
+    "title": "Deep Learning on Graphs: A Survey",
+    "taxonomy": [
+      {
+        "level": 1,
+        "section": "1. Introduction",
+        "papers": [
+          {
+            "ref_id": "[1]",
+            "title": "Deep learning",
+            "year": 2015
+          },
+          {
+            "ref_id": "[2]",
+            "title": "Deep neural\nnetworks for acoustic modeling in speech recognition: The shared views\nof four research groups",
+            "year": 2012
+          },
+          {
+            "ref_id": "[3]",
+            "title": "Imagenet classiﬁcation\nwith deep convolutional neural networks",
+            "year": 2012
+          },
+          {
+            "ref_id": "[4]",
+            "title": "Neural machine translation\nby jointly learning to align and translate",
+            "year": 2015
+          },
+          {
+            "ref_id": "[5]",
+            "title": "Network science",
+            "year": 2016
+          },
+          {
+            "ref_id": "[6]",
+            "title": "The emerging ﬁeld of signal processing on graphs: Ex-\ntending high-dimensional data analysis to networks and other irregular\ndomains",
+            "year": 2013
+          },
+          {
+            "ref_id": "[7]",
+            "title": "Geometric deep learning: going beyond euclidean data",
+            "year": 2017
+          },
+          {
+            "ref_id": "[8]",
+            "title": "Beyond sigmoids: The nettide model\nfor social network growth, and its applications",
+            "year": 2016
+          },
+          {
+            "ref_id": "[9]",
+            "title": "Relational\ninductive biases, deep learning, and graph networks",
+            "year": 2018
+          },
+          {
+            "ref_id": "[10]",
+            "title": "Attention\nmodels in graphs: A survey",
+            "year": 2019
+          },
+          {
+            "ref_id": "[11]",
+            "title": "Graph convolutional\nnetworks: Algorithms, applications and open challenges",
+            "year": 2019
+          },
+          {
+            "ref_id": "[12]",
+            "title": "Adversarial attack and defense on\ngraph data: A survey",
+            "year": 2018
+          },
+          {
+            "ref_id": "[13]",
+            "title": "Graph\nneural networks: A review of methods and applications",
+            "year": 2018
+          },
+          {
+            "ref_id": "[14]",
+            "title": "A\ncomprehensive survey on graph neural networks",
+            "year": 2019
+          },
+          {
+            "ref_id": "[15]",
+            "title": "Graph\nembedding and extensions: A general framework for dimensionality\nreduction",
+            "year": 2007
+          },
+          {
+            "ref_id": "[17]",
+            "title": "A survey on network embedding",
+            "year": 2018
+          }
+        ]
+      },
+      {
+        "level": 1,
+        "section": "2. Notations And Preliminaries",
+        "papers": [
+          {
+            "ref_id": "[18]",
+            "title": "Learning represen-\ntations by back-propagating errors",
+            "year": 1986
+          },
+          {
+            "ref_id": "[19]",
+            "title": "Adam: A method for stochastic optimiza-\ntion",
+            "year": 2014
+          },
+          {
+            "ref_id": "[20]",
+            "title": "Dropout: a simple way to prevent neural networks from overﬁt-\nting",
+            "year": 2014
+          },
+          {
+            "ref_id": "[21]",
+            "title": "Community\npreserving network embedding",
+            "year": 2017
+          },
+          {
+            "ref_id": "[22]",
+            "title": "Learning to discover social circles in\nego networks",
+            "year": 2012
+          }
+        ]
+      },
+      {
+        "level": 1,
+        "section": "3. Graph Recurrent Neural Networks",
+        "children": [
+          {
+            "level": 2,
+            "subsection": "3.1 Node-level RNNs",
+            "papers": [
+              {
+                "ref_id": "[23]",
+                "title": "The graph neural network model",
+                "year": 2009
+              },
+              {
+                "ref_id": "[32]",
+                "title": "A new model for learning\nin graph domains",
+                "year": 2005
+              },
+              {
+                "ref_id": "[33]",
+                "title": "A general framework for\nadaptive processing of data structures",
+                "year": 1998
+              },
+              {
+                "ref_id": "[34]",
+                "title": "An efﬁcient method for ﬁnding the minimum of a func-\ntion of several variables without calculating derivatives",
+                "year": 1964
+              },
+              {
+                "ref_id": "[35]",
+                "title": "A learning rule for asynchronous perceptrons with\nfeedback in a combinatorial environment.",
+                "year": 1987
+              },
+              {
+                "ref_id": "[36]",
+                "title": "Generalization of back-propagation to recurrent neural\nnetworks",
+                "year": 1987
+              },
+              {
+                "ref_id": "[37]",
+                "title": "An introduction to metric spaces and\nﬁxed point theory",
+                "year": 2011
+              },
+              {
+                "ref_id": "[24]",
+                "title": "Gated graph\nsequence neural networks",
+                "year": 2016
+              },
+              {
+                "ref_id": "[25]",
+                "title": "Learning steady-\nstates of iterative algorithms over graphs",
+                "year": 2018
+              },
+              {
+                "ref_id": "[26]",
+                "title": "Graphrnn:\nGenerating realistic graphs with deep auto-regressive models",
+                "year": 2018
+              },
+              {
+                "ref_id": "[27]",
+                "title": "Streaming graph\nneural networks",
+                "year": 2018
+              },
+              {
+                "ref_id": "[28]",
+                "title": "Geometric matrix completion\nwith recurrent multi-graph neural networks",
+                "year": 2017
+              },
+              {
+                "ref_id": "[29]",
+                "title": "Dynamic graph convolutional\nnetworks",
+                "year": 2017
+              },
+              {
+                "ref_id": "[38]",
+                "title": "Learning\nto decipher the heap for program veriﬁcation",
+                "year": 2015
+              }
+            ]
+          },
+          {
+            "level": 2,
+            "subsection": "3.2 Graph-level RNNs",
+            "papers": [
+              {
+                "ref_id": "[26]",
+                "title": "Graphrnn:\nGenerating realistic graphs with deep auto-regressive models",
+                "year": 2018
+              },
+              {
+                "ref_id": "[27]",
+                "title": "Streaming graph\nneural networks",
+                "year": 2018
+              },
+              {
+                "ref_id": "[39]",
+                "title": "Patient subtyping via time-aware lstm networks",
+                "year": 2017
+              },
+              {
+                "ref_id": "[28]",
+                "title": "Geometric matrix completion\nwith recurrent multi-graph neural networks",
+                "year": 2017
+              },
+              {
+                "ref_id": "[29]",
+                "title": "Dynamic graph convolutional\nnetworks",
+                "year": 2017
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "level": 1,
+        "section": "4. Graph Convolutional Networks",
+        "children": [
+          {
+            "level": 2,
+            "subsection": "4.1 Convolution Operations",
+            "papers": [
+              {
+                "ref_id": "[6]",
+                "title": "The emerging ﬁeld of signal processing on graphs: Ex-\ntending high-dimensional data analysis to networks and other irregular\ndomains",
+                "year": 2013
+              },
+              {
+                "ref_id": "[40]",
+                "title": "Spectral networks\nand locally connected networks on graphs",
+                "year": 2015
+              },
+              {
+                "ref_id": "[75]",
+                "title": "Laplacian eigenmaps and spectral techniques\nfor embedding and clustering",
+                "year": 2002
+              },
+              {
+                "ref_id": "[41]",
+                "title": "Deep convolutional networks on\ngraph-structured data",
+                "year": 2015
+              },
+              {
+                "ref_id": "[42]",
+                "title": "Convolutional neural\nnetworks on graphs with fast localized spectral ﬁltering",
+                "year": 2016
+              },
+              {
+                "ref_id": "[43]",
+                "title": "Semi-supervised classiﬁcation with graph\nconvolutional networks",
+                "year": 2017
+              },
+              {
+                "ref_id": "[44]",
+                "title": "Cayleynets:\nGraph convolutional neural networks with complex rational spectral\nﬁlters",
+                "year": 2017
+              },
+              {
+                "ref_id": "[45]",
+                "title": "Graph wavelet\nneural network",
+                "year": 2019
+              },
+              {
+                "ref_id": "[46]",
+                "title": "Convolutional networks on graphs\nfor learning molecular ﬁngerprints",
+                "year": 2015
+              },
+              {
+                "ref_id": "[47]",
+                "title": "Learning convolutional\nneural networks for graphs",
+                "year": 2016
+              },
+              {
+                "ref_id": "[48]",
+                "title": "Large-scale learnable graph convolutional\nnetworks",
+                "year": 2018
+              },
+              {
+                "ref_id": "[49]",
+                "title": "An end-to-end deep\nlearning architecture for graph classiﬁcation",
+                "year": 2018
+              },
+              {
+                "ref_id": "[50]",
+                "title": "Diffusion-convolutional neural networks",
+                "year": 2016
+              },
+              {
+                "ref_id": "[51]",
+                "title": "Dual graph convolutional networks for graph-\nbased semi-supervised classiﬁcation",
+                "year": 2018
+              },
+              {
+                "ref_id": "[52]",
+                "title": "Neural message passing for quantum chemistry",
+                "year": 2017
+              },
+              {
+                "ref_id": "[53]",
+                "title": "Inductive representation\nlearning on large graphs",
+                "year": 2017
+              },
+              {
+                "ref_id": "[54]",
+                "title": "Geometric deep learning on graphs and manifolds using\nmixture model cnns",
+                "year": 2017
+              },
+              {
+                "ref_id": "[9]",
+                "title": "Relational\ninductive biases, deep learning, and graph networks",
+                "year": 2018
+              },
+              {
+                "ref_id": "[55]",
+                "title": "Molecular graph convolutions: moving beyond ﬁngerprints",
+                "year": 2016
+              },
+              {
+                "ref_id": "[56]",
+                "title": "Hierarchical graph representation learning with differentiable pooling",
+                "year": 2018
+              },
+              {
+                "ref_id": "[57]",
+                "title": "Graph attention networks",
+                "year": 2018
+              },
+              {
+                "ref_id": "[58]",
+                "title": "Gaan:\nGated attention networks for learning on large and spatiotemporal\ngraphs",
+                "year": 2018
+              },
+              {
+                "ref_id": "[59]",
+                "title": "Heterogeneous graph attention network",
+                "year": 2019
+              },
+              {
+                "ref_id": "[60]",
+                "title": "Column networks for\ncollective classiﬁcation.",
+                "year": 2017
+              },
+              {
+                "ref_id": "[61]",
+                "title": "Predict then propagate:\nGraph neural networks meet personalized pagerank",
+                "year": 2019
+              },
+              {
+                "ref_id": "[62]",
+                "title": "Representation learning on graphs with jumping knowledge networks",
+                "year": 2018
+              },
+              {
+                "ref_id": "[63]",
+                "title": "Dynamic edgeconditioned ﬁlters\nin convolutional neural networks on graphs",
+                "year": 2017
+              },
+              {
+                "ref_id": "[64]",
+                "title": "Modeling relational data with graph convolutional\nnetworks",
+                "year": 2018
+              },
+              {
+                "ref_id": "[65]",
+                "title": "Supervised community detection with\nline graph neural networks",
+                "year": 2019
+              },
+              {
+                "ref_id": "[66]",
+                "title": "Graph convolutional neural networks for web-scale\nrecommender systems",
+                "year": 2018
+              },
+              {
+                "ref_id": "[67]",
+                "title": "Stochastic training of graph convolutional\nnetworks with variance reduction",
+                "year": 2018
+              },
+              {
+                "ref_id": "[68]",
+                "title": "Fastgcn: fast learning with graph\nconvolutional networks via importance sampling",
+                "year": 2018
+              },
+              {
+                "ref_id": "[69]",
+                "title": "Adaptive sampling\ntowards fast graph representation learning",
+                "year": 2018
+              },
+              {
+                "ref_id": "[70]",
+                "title": "Deeper insights into graph convolutional\nnetworks for semi-supervised learning",
+                "year": 2018
+              },
+              {
+                "ref_id": "[71]",
+                "title": "Sim-\nplifying graph convolutional networks",
+                "year": 2019
+              },
+              {
+                "ref_id": "[72]",
+                "title": "Revisiting graph neural networks: All we have is low-pass\nﬁlters",
+                "year": 2019
+              },
+              {
+                "ref_id": "[73]",
+                "title": "How powerful are graph\nneural networks?",
+                "year": 2019
+              },
+              {
+                "ref_id": "[74]",
+                "title": "Deep graph infomax",
+                "year": 2019
+              },
+              {
+                "ref_id": "[7]",
+                "title": "Geometric deep learning: going beyond euclidean data",
+                "year": 2017
+              },
+              {
+                "ref_id": "[76]",
+                "title": "Wavelets on\ngraphs via spectral graph theory",
+                "year": 2011
+              },
+              {
+                "ref_id": "[77]",
+                "title": "Arbitrary-order\nproximity preserved network embedding",
+                "year": 2018
+              },
+              {
+                "ref_id": "[78]",
+                "title": "Weisfeiler-lehman graph kernels",
+                "year": 2011
+              },
+              {
+                "ref_id": "[79]",
+                "title": "Neural word embedding as implicit matrix\nfactorization",
+                "year": 2014
+              },
+              {
+                "ref_id": "[24]",
+                "title": "Gated graph\nsequence neural networks",
+                "year": 2016
+              }
+            ]
+          },
+          {
+            "level": 2,
+            "subsection": "4.2 Readout Operations",
+            "papers": [
+              {
+                "ref_id": "[80]",
+                "title": "Graph isomorphism in quasipolynomial time",
+                "year": 2016
+              },
+              {
+                "ref_id": "[46]",
+                "title": "Convolutional networks on graphs\nfor learning molecular ﬁngerprints",
+                "year": 2015
+              },
+              {
+                "ref_id": "[50]",
+                "title": "Diffusion-convolutional neural networks",
+                "year": 2016
+              },
+              {
+                "ref_id": "[55]",
+                "title": "Molecular graph convolutions: moving beyond ﬁngerprints",
+                "year": 2016
+              },
+              {
+                "ref_id": "[81]",
+                "title": "Fuzzy sets and fuzzy logic",
+                "year": 1995
+              },
+              {
+                "ref_id": "[56]",
+                "title": "Hierarchical graph representation learning with differentiable pooling",
+                "year": 2018
+              },
+              {
+                "ref_id": "[40]",
+                "title": "Spectral networks\nand locally connected networks on graphs",
+                "year": 2015
+              },
+              {
+                "ref_id": "[82]",
+                "title": "Hierarchical taxonomy aware\nnetwork embedding",
+                "year": 2018
+              },
+              {
+                "ref_id": "[83]",
+                "title": "The elements of statistical learning: Data mining, infer-\nence, and prediction",
+                "year": 2010
+              },
+              {
+                "ref_id": "[84]",
+                "title": "A tutorial on spectral clustering",
+                "year": 2007
+              },
+              {
+                "ref_id": "[41]",
+                "title": "Deep convolutional networks on\ngraph-structured data",
+                "year": 2015
+              },
+              {
+                "ref_id": "[42]",
+                "title": "Convolutional neural\nnetworks on graphs with fast localized spectral ﬁltering",
+                "year": 2016
+              },
+              {
+                "ref_id": "[54]",
+                "title": "Geometric deep learning on graphs and manifolds using\nmixture model cnns",
+                "year": 2017
+              },
+              {
+                "ref_id": "[85]",
+                "title": "Weighted graph cuts without\neigenvectors a multilevel approach",
+                "year": 2007
+              },
+              {
+                "ref_id": "[63]",
+                "title": "Dynamic edgeconditioned ﬁlters\nin convolutional neural networks on graphs",
+                "year": 2017
+              },
+              {
+                "ref_id": "[86]",
+                "title": "A multiscale pyramid\ntransform for graph signals",
+                "year": 2016
+              },
+              {
+                "ref_id": "[47]",
+                "title": "Learning convolutional\nneural networks for graphs",
+                "year": 2016
+              },
+              {
+                "ref_id": "[49]",
+                "title": "An end-to-end deep\nlearning architecture for graph classiﬁcation",
+                "year": 2018
+              },
+              {
+                "ref_id": "[87]",
+                "title": "Practical graph isomorphism, II",
+                "year": 2014
+              },
+              {
+                "ref_id": "[23]",
+                "title": "The graph neural network model",
+                "year": 2009
+              },
+              {
+                "ref_id": "[9]",
+                "title": "Relational\ninductive biases, deep learning, and graph networks",
+                "year": 2018
+              },
+              {
+                "ref_id": "[88]",
+                "title": "Order matters: Sequence to\nsequence for sets",
+                "year": 2016
+              }
+            ]
+          },
+          {
+            "level": 2,
+            "subsection": "4.3 Improvements and Discussions",
+            "papers": [
+              {
+                "ref_id": "[89]",
+                "title": "Attention is all you need",
+                "year": 2017
+              },
+              {
+                "ref_id": "[57]",
+                "title": "Graph attention networks",
+                "year": 2018
+              },
+              {
+                "ref_id": "[58]",
+                "title": "Gaan:\nGated attention networks for learning on large and spatiotemporal\ngraphs",
+                "year": 2018
+              },
+              {
+                "ref_id": "[59]",
+                "title": "Heterogeneous graph attention network",
+                "year": 2019
+              },
+              {
+                "ref_id": "[62]",
+                "title": "Representation learning on graphs with jumping knowledge networks",
+                "year": 2018
+              },
+              {
+                "ref_id": "[70]",
+                "title": "Deeper insights into graph convolutional\nnetworks for semi-supervised learning",
+                "year": 2018
+              },
+              {
+                "ref_id": "[90]",
+                "title": "Deep residual learning for image\nrecognition",
+                "year": 2016
+              },
+              {
+                "ref_id": "[43]",
+                "title": "Semi-supervised classiﬁcation with graph\nconvolutional networks",
+                "year": 2017
+              },
+              {
+                "ref_id": "[60]",
+                "title": "Column networks for\ncollective classiﬁcation.",
+                "year": 2017
+              },
+              {
+                "ref_id": "[24]",
+                "title": "Gated graph\nsequence neural networks",
+                "year": 2016
+              },
+              {
+                "ref_id": "[61]",
+                "title": "Predict then propagate:\nGraph neural networks meet personalized pagerank",
+                "year": 2019
+              },
+              {
+                "ref_id": "[53]",
+                "title": "Inductive representation\nlearning on large graphs",
+                "year": 2017
+              },
+              {
+                "ref_id": "[46]",
+                "title": "Convolutional networks on graphs\nfor learning molecular ﬁngerprints",
+                "year": 2015
+              },
+              {
+                "ref_id": "[63]",
+                "title": "Dynamic edgeconditioned ﬁlters\nin convolutional neural networks on graphs",
+                "year": 2017
+              },
+              {
+                "ref_id": "[64]",
+                "title": "Modeling relational data with graph convolutional\nnetworks",
+                "year": 2018
+              },
+              {
+                "ref_id": "[50]",
+                "title": "Diffusion-convolutional neural networks",
+                "year": 2016
+              },
+              {
+                "ref_id": "[65]",
+                "title": "Supervised community detection with\nline graph neural networks",
+                "year": 2019
+              },
+              {
+                "ref_id": "[55]",
+                "title": "Molecular graph convolutions: moving beyond ﬁngerprints",
+                "year": 2016
+              },
+              {
+                "ref_id": "[9]",
+                "title": "Relational\ninductive biases, deep learning, and graph networks",
+                "year": 2018
+              },
+              {
+                "ref_id": "[91]",
+                "title": "Emergence of scaling in random net-\nworks",
+                "year": 1999
+              },
+              {
+                "ref_id": "[66]",
+                "title": "Graph convolutional neural networks for web-scale\nrecommender systems",
+                "year": 2018
+              },
+              {
+                "ref_id": "[67]",
+                "title": "Stochastic training of graph convolutional\nnetworks with variance reduction",
+                "year": 2018
+              },
+              {
+                "ref_id": "[68]",
+                "title": "Fastgcn: fast learning with graph\nconvolutional networks via importance sampling",
+                "year": 2018
+              },
+              {
+                "ref_id": "[69]",
+                "title": "Adaptive sampling\ntowards fast graph representation learning",
+                "year": 2018
+              },
+              {
+                "ref_id": "[92]",
+                "title": "Depthlgp: Learning embeddings of out-of-\nsample nodes in dynamic networks",
+                "year": 2018
+              },
+              {
+                "ref_id": "[71]",
+                "title": "Sim-\nplifying graph convolutional networks",
+                "year": 2019
+              },
+              {
+                "ref_id": "[72]",
+                "title": "Revisiting graph neural networks: All we have is low-pass\nﬁlters",
+                "year": 2019
+              },
+              {
+                "ref_id": "[49]",
+                "title": "An end-to-end deep\nlearning architecture for graph classiﬁcation",
+                "year": 2018
+              },
+              {
+                "ref_id": "[78]",
+                "title": "Weisfeiler-lehman graph kernels",
+                "year": 2011
+              },
+              {
+                "ref_id": "[73]",
+                "title": "How powerful are graph\nneural networks?",
+                "year": 2019
+              },
+              {
+                "ref_id": "[93]",
+                "title": "The vapnik–\nchervonenkis dimension of graph and recursive neural networks",
+                "year": 2015
+              },
+              {
+                "ref_id": "[94]",
+                "title": "Stability and generalization of graph\nconvolutional neural networks",
+                "year": 2019
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "level": 1,
+        "section": "5. Graph Autoencoders",
+        "children": [
+          {
+            "level": 2,
+            "subsection": "5.1 Autoencoders",
+            "papers": [
+              {
+                "ref_id": "[96]",
+                "title": "Learning deep\nrepresentations for graph clustering.",
+                "year": 2014
+              },
+              {
+                "ref_id": "[97]",
+                "title": "Structural deep network embedding",
+                "year": 2016
+              },
+              {
+                "ref_id": "[98]",
+                "title": "Deep neural networks for learning graph\nrepresentations.",
+                "year": 2016
+              },
+              {
+                "ref_id": "[99]",
+                "title": "Graph convolutional matrix\ncompletion",
+                "year": 2015
+              },
+              {
+                "ref_id": "[5]",
+                "title": "Network science",
+                "year": 2016
+              },
+              {
+                "ref_id": "[75]",
+                "title": "Laplacian eigenmaps and spectral techniques\nfor embedding and clustering",
+                "year": 2002
+              },
+              {
+                "ref_id": "[79]",
+                "title": "Neural word embedding as implicit matrix\nfactorization",
+                "year": 2014
+              },
+              {
+                "ref_id": "[43]",
+                "title": "Semi-supervised classiﬁcation with graph\nconvolutional networks",
+                "year": 2017
+              }
+            ]
+          },
+          {
+            "level": 2,
+            "subsection": "5.2 Variational Autoencoders",
+            "papers": [
+              {
+                "ref_id": "[43]",
+                "title": "Semi-supervised classiﬁcation with graph\nconvolutional networks",
+                "year": 2017
+              }
+            ]
+          },
+          {
+            "level": 2,
+            "subsection": "5.3 Improvements and Discussions",
+            "papers": [
+              {
+                "ref_id": "[99]",
+                "title": "Graph convolutional matrix\ncompletion",
+                "year": 2015
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "level": 1,
+        "section": "6. Graph Reinforcement Learning",
+        "papers": []
+      },
+      {
+        "level": 1,
+        "section": "7. Graph Adversarial Methods",
+        "children": [
+          {
+            "level": 2,
+            "subsection": "7.1 Adversarial Training",
+            "papers": [
+              {
+                "ref_id": "[17]",
+                "title": "A survey on network embedding",
+                "year": 2018
+              }
+            ]
+          },
+          {
+            "level": 2,
+            "subsection": "7.2 Adversarial Attacks",
+            "papers": []
+          }
+        ]
+      },
+      {
+        "level": 1,
+        "section": "8. Discussions And Conclusion",
+        "children": [
+          {
+            "level": 2,
+            "subsection": "8.1 Applications",
+            "papers": [
+              {
+                "ref_id": "[28]",
+                "title": "Geometric matrix completion\nwith recurrent multi-graph neural networks",
+                "year": 2017
+              },
+              {
+                "ref_id": "[66]",
+                "title": "Graph convolutional neural networks for web-scale\nrecommender systems",
+                "year": 2018
+              },
+              {
+                "ref_id": "[99]",
+                "title": "Graph convolutional matrix\ncompletion",
+                "year": 2015
+              },
+              {
+                "ref_id": "[46]",
+                "title": "Convolutional networks on graphs\nfor learning molecular ﬁngerprints",
+                "year": 2015
+              },
+              {
+                "ref_id": "[52]",
+                "title": "Neural message passing for quantum chemistry",
+                "year": 2017
+              },
+              {
+                "ref_id": "[55]",
+                "title": "Molecular graph convolutions: moving beyond ﬁngerprints",
+                "year": 2016
+              }
+            ]
+          },
+          {
+            "level": 2,
+            "subsection": "8.2 Implementations",
+            "papers": []
+          },
+          {
+            "level": 2,
+            "subsection": "8.3 Future Directions",
+            "papers": [
+              {
+                "ref_id": "[9]",
+                "title": "Relational\ninductive biases, deep learning, and graph networks",
+                "year": 2018
+              },
+              {
+                "ref_id": "[27]",
+                "title": "Streaming graph\nneural networks",
+                "year": 2018
+              },
+              {
+                "ref_id": "[29]",
+                "title": "Dynamic graph convolutional\nnetworks",
+                "year": 2017
+              }
+            ]
+          },
+          {
+            "level": 2,
+            "subsection": "8.4 Summary",
+            "papers": []
+          }
+        ]
+      }
+    ]
+  }
+}
