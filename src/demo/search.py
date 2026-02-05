@@ -23,6 +23,7 @@ import re
 import time
 import urllib.parse
 import urllib.request
+import urllib.error
 import argparse
 import os
 from typing import Optional, Dict, List, Set, Tuple
@@ -38,6 +39,10 @@ CONFIG = {
     'match_threshold': 0.4,     # 标题匹配阈值（Jaccard相似度）
     'timeout': 30,              # 请求超时时间（秒）
 }
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DEFAULT_TAXONOMY_PATH = os.path.join(BASE_DIR, 'gnn1_taxonomy.json')
+DEFAULT_OUTPUT_PATH = os.path.join(BASE_DIR, 'gnn1_citation_graph.json')
 
 # ============== 数据结构 ==============
 
@@ -122,14 +127,13 @@ def calculate_title_similarity(title1: str, title2: str) -> float:
 
 BASE_URL = "https://api.semanticscholar.org/graph/v1"
 
-def make_api_request(url: str, max_retries: int = None) -> Optional[dict]:
+def make_api_request(url: str, max_retries: Optional[int] = None) -> Optional[dict]:
     """
     发送API请求，带重试机制
     """
-    if max_retries is None:
-        max_retries = CONFIG['max_retries']
+    retries = CONFIG['max_retries'] if max_retries is None else max_retries
     
-    for attempt in range(max_retries):
+    for attempt in range(retries):
         try:
             req = urllib.request.Request(url)
             req.add_header('User-Agent', 'CitationGraphBuilder/2.0 (Academic Research)')
@@ -146,15 +150,15 @@ def make_api_request(url: str, max_retries: int = None) -> Optional[dict]:
                 return None
             else:
                 print(f"      ⚠️  HTTP Error {e.code}: {e.reason}")
-                if attempt < max_retries - 1:
+                if attempt < retries - 1:
                     time.sleep(2)
         except urllib.error.URLError as e:
             print(f"      ⚠️  Network error: {e.reason}")
-            if attempt < max_retries - 1:
+            if attempt < retries - 1:
                 time.sleep(2)
         except Exception as e:
             print(f"      ⚠️  Error: {e}")
-            if attempt < max_retries - 1:
+            if attempt < retries - 1:
                 time.sleep(1)
     
     return None
@@ -438,8 +442,10 @@ Examples:
     python build_citation_graph_v2.py input.json output.json --delay 0.5
         """
     )
-    parser.add_argument('input', help='Input taxonomy JSON file')
-    parser.add_argument('output', help='Output file path (will create .json and .pt)')
+    parser.add_argument('input', nargs='?', default=DEFAULT_TAXONOMY_PATH,
+                        help=f'Input taxonomy JSON file (default: {DEFAULT_TAXONOMY_PATH})')
+    parser.add_argument('output', nargs='?', default=DEFAULT_OUTPUT_PATH,
+                        help=f'Output file path (will create .json and .pt, default: {DEFAULT_OUTPUT_PATH})')
     parser.add_argument('--resume', action='store_true', help='Resume from previous progress')
     parser.add_argument('--delay', type=float, default=CONFIG['api_delay'],
                         help=f'Delay between API calls in seconds (default: {CONFIG["api_delay"]})')
