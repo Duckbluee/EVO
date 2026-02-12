@@ -1,0 +1,166 @@
+任务名称：
+从一篇 Survey / Review Paper 中自动抽取 Methodology Taxonomy，并输出为按章节组织的树状 JSON 结构。
+
+输入：
+你将收到一篇 survey/review 论文（PDF 或已提取文本）。
+
+目标：
+1）只抽取真正属于 Methodology / 技术分类 / 方法体系的章节内容。
+2）构建完整章节层级（Section → Subsection → Subsubsection）。
+3）在每个章节节点下列出该章节中出现的参考文献。
+4）按 Section-first 组织输出。
+5）主结构必须是按章节组织，而不是按论文组织。
+
+输出结构必须严格如下：
+
+{
+"survey_title": "...",
+"taxonomy_tree": [...],
+"reference_index": {...}
+}
+
+每个 Section 节点必须包含：
+
+{
+"label": "3.2 Graph-based Methods",
+"path": ["3 Methods", "3.2 Graph-based Methods"],
+"children": [...],
+"papers": [...]
+}
+
+规则说明：
+
+1）label 必须保留原始章节编号和标题。
+2）path 必须是从 Methodology 根节点到当前节点的完整路径。
+3）children 必须包含所有子章节。
+4）papers 仅包含本章节范围内出现的引用论文。
+
+引用处理规则：
+
+情况一：数字引用格式
+示例：[12]，[3,5,7]，[8–10]
+
+规则：
+
+使用原编号作为 ref_id。
+
+区间必须展开，例如 8–10 展开为 8,9,10。
+
+多引用必须分别记录。
+
+每个引用都必须归属于其所在的最细粒度章节节点。
+
+情况二：作者-年份格式
+示例：(Smith, 2020)，Smith et al., 2019
+
+规则：
+
+按正文首次出现顺序自动编号。
+
+第一次出现的新论文分配 ref_id=1，第二篇新论文分配 ref_id=2，以此类推。
+
+相同论文重复出现必须复用已有编号。
+
+参考文献解析规则：
+
+必须为每个 ref_id 解析：
+
+title_raw（原始参考文献条目文本）
+
+title（修复后的标题）
+
+year（若无法提取则为 null）
+
+标题修复规则：
+
+修复断词。
+
+修复粘连。
+
+不允许编造内容。
+
+必须保留 title_raw。
+
+若无法可靠修复，则保留原始形式。
+
+Methodology 章节筛选规则：
+
+只保留真正讲技术分类 / 方法体系 / 算法类别的章节。
+
+必须排除：
+
+Introduction
+
+Conclusion
+
+Future Work
+
+Acknowledgement
+
+一般性 Background（除非其中包含明确的方法分类）
+
+纯 Related Work（除非其结构本身就是方法 taxonomy）
+
+判断依据：
+
+是否高密度出现引用。
+
+是否包含 method / model / framework / algorithm / taxonomy / category 等信号。
+
+是否在做技术类别划分。
+
+每个 section 下的 paper 存储格式必须为：
+
+{
+"ref_id": 12,
+"title": "...",
+"title_raw": "...",
+"year": 2019,
+"count": 3
+}
+
+说明：
+
+count 为该论文在本章节内出现次数。
+
+同一论文允许出现在多个章节。
+
+不允许跨章节合并。
+
+必须输出 reference_index：
+
+"reference_index": {
+"12": {
+"title": "...",
+"title_raw": "...",
+"year": 2019
+}
+}
+
+禁止行为：
+
+不允许按 paper 组织主结构。
+
+不允许丢失章节层级。
+
+不允许删除编号。
+
+不允许改写章节标题。
+
+不允许生成不存在的论文标题。
+
+不允许输出解释文本。
+
+异常处理规则：
+
+若正文存在引用但参考文献列表缺失，year 设为 null。
+
+若无法匹配引用，仍需保留 ref_id。
+
+若标题修复不确定，保留原始形式。
+
+输出要求：
+仅输出 JSON。
+不得输出解释说明。
+不得输出 Markdown。
+不得输出额外文本。

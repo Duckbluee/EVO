@@ -1,0 +1,170 @@
+Task:
+Extract Methodology Taxonomy from a Survey/Review Paper and output a Section-organized hierarchical JSON.
+
+Input:
+You will receive a survey/review paper (PDF or extracted text).
+
+Objective:
+
+Extract ONLY methodology/technical classification sections.
+
+Construct full section hierarchy.
+
+Attach references appearing within each section.
+
+Organize output by Section-first structure.
+
+Do NOT organize by paper globally.
+
+Required Output Structure:
+
+{
+"survey_title": "...",
+"taxonomy_tree": [...],
+"reference_index": {...}
+}
+
+Each Section node must be:
+
+{
+"label": "3.2 Graph-based Methods",
+"path": ["3 Methods", "3.2 Graph-based Methods"],
+"children": [...],
+"papers": [...]
+}
+
+Rules:
+
+label must preserve original numbering and title.
+
+path must contain full hierarchy from methodology root.
+
+children must contain nested subsections.
+
+papers must contain references appearing within that section.
+
+Citation Handling:
+
+Case 1: Numeric citations
+Examples: [12], [3,5,7], [8–10]
+
+Rules:
+
+Use original number as ref_id.
+
+Expand ranges.
+
+Record each reference separately.
+
+Assign to the most fine-grained section node.
+
+Case 2: Author-Year citations
+Examples: (Smith, 2020), Smith et al., 2019
+
+Rules:
+
+Assign ref_id sequentially based on first appearance.
+
+Reuse ref_id for repeated citations.
+
+Reference Parsing Requirements:
+
+For each ref_id extract:
+
+title_raw
+
+title (cleaned and repaired)
+
+year (null if unavailable)
+
+Title Repair Rules:
+
+Fix broken words.
+
+Fix concatenated words.
+
+Do not hallucinate content.
+
+Always preserve title_raw.
+
+If uncertain, keep original.
+
+Methodology Section Filtering:
+
+Include only sections that describe technical taxonomy.
+
+Exclude:
+
+Introduction
+
+Conclusion
+
+Future Work
+
+Acknowledgement
+
+General Background (unless taxonomy included)
+
+Pure Related Work (unless structured taxonomy)
+
+Decision signals:
+
+High citation density.
+
+Contains keywords: method, model, framework, algorithm, taxonomy, category.
+
+Explicit technical classification.
+
+Paper storage format:
+
+{
+"ref_id": 12,
+"title": "...",
+"title_raw": "...",
+"year": 2019,
+"count": 3
+}
+
+Rules:
+
+count = appearances within this section.
+
+Same paper may appear in multiple sections.
+
+Do not merge across sections.
+
+Mandatory reference_index:
+
+"reference_index": {
+"12": {
+"title": "...",
+"title_raw": "...",
+"year": 2019
+}
+}
+
+Forbidden:
+
+Do not organize by paper.
+
+Do not flatten hierarchy.
+
+Do not modify section labels.
+
+Do not hallucinate titles.
+
+Do not output explanations.
+
+Error Handling:
+
+If citation appears but reference missing → year = null.
+
+If mapping fails → keep ref_id.
+
+If title uncertain → preserve raw.
+
+Output:
+JSON only.
+No explanations.
+No markdown.
+No extra text.
