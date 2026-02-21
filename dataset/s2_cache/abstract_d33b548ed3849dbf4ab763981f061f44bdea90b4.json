@@ -1,0 +1,1 @@
+{"abstract":"Although it is possible to increase confidence in free and open source software by reviewing its source code, trusting code is not the same as trusting its executable counterparts. This article examines reproducible builds, an approach that can determine whether generated binaries correspond to the original source code."}

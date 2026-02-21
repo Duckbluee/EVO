@@ -1,0 +1,1 @@
+{"abstract":"The Hessian matrix has a number of important applications in a variety of different fields, such as optimzation, image processing and statistics. In this paper we focus on the practical aspects of efficiently computing Hessian matrices in the context of deep learning using the Python scripting language and the TensorFlow library."}

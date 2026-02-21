@@ -1,0 +1,1 @@
+{"abstract":"Logs are incrementally produced textual data that reflect events and their impact on technical systems. Their efficient analysis is key for operational cybersecurity. We investigate approaches beyond applying simple regular expressions and provide insights into novel machine learning mechanisms for parsing and analyzing log data for online anomaly detection."}

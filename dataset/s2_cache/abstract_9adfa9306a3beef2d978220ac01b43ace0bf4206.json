@@ -1,0 +1,1 @@
+{"abstract":"Despite widespread use in natural language processing (NLP) tasks, word embeddings have been criticized for inheriting unintended gender bias from training corpora. programmer is more closely associated with man and homemaker is more closely associated with woman. Such gender bias has also been shown to propagate in downstream tasks."}

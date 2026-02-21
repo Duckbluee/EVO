@@ -1,1 +1,10 @@
 help.txt
+guide.txt
+
+#local files
+.env
+tests/
+logs/
+mineru_output/
+parsed_references/
+pdf/

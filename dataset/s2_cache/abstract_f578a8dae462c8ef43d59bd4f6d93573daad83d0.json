@@ -1,0 +1,1 @@
+{"abstract":"The design and implementation decisions made for the three-dimensional data manager POSTGRES are discussed. Attention is restricted to the DBMS backend functions. The POSTGRES data model and query language, the rules system, the storage system, the POSTGRES implementation and the current status and performance are discussed. >"}

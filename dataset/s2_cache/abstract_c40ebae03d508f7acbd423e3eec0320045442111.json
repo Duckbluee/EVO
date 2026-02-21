@@ -1,0 +1,1 @@
+{"abstract":"Federated learning is a privacy-by-design framework that enables training deep neural networks from decentralized sources of data, but it is fraught with innumerable attack surfaces. We provide a taxonomy of recent attacks on federated learning systems and detail the need for more robust threat modeling in federated learning environments."}

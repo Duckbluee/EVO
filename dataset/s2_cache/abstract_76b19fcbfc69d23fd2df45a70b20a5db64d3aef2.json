@@ -1,0 +1,1 @@
+{"abstract":"Automatic Lane Centering (ALC) systems are convenient and widely deployed today, but they are also highly security and safety critical. Recent research shows that Dirty Road Patch (DRP) attack can successfully attack DNN-based ALC systems. In this work, we will demonstrate the DRP attack on a production-level simulator and a physical-world setup."}

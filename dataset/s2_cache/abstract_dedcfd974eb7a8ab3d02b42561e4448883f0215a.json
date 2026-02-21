@@ -1,0 +1,1 @@
+{"abstract":"Long sequences are ubiquitous in NLP tasks such as document summarization, machine translation, and dialogue modeling [1]–[9]. Traditional approaches to parallelism, including data parallelism [10]–[12], tensor [13] and pipeline parallelism [14]–[16] struggle to handle sequences that span thousands or even millions of tokens."}

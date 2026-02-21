@@ -1,0 +1,1 @@
+{"abstract":"We present UnifiedQA-v2, a QA model built with the same process as UnifiedQA, except that it utilizes more supervision -- roughly 3x the number of datasets used for UnifiedQA. This generally leads to better in-domain and cross-domain results."}

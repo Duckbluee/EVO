@@ -1,0 +1,1 @@
+{"abstract":"Graph neural networks (GNNs) have been widely used for predicting molecular properties, especially for single molecules. However, when treating multi-component systems, GNNs have mostly used simple data representations (concatenation, averaging,..."}
